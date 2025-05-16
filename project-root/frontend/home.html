@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FeastAndFest - Event & Catering Services</title>
+    <meta name="description" content="FeastAndFest provides top-tier event & catering services, from venues to entertainment. Dine and celebrate with us.">
+    <link rel="icon" href="media/favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            overflow-x: hidden;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .video-container video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .overlay-content {
+            position: relative;
+            z-index: 2;
+        }
+        header {
+            background-color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 3;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .logo-image {
+            height: 60px;
+            width: auto;
+            object-fit: contain;
+        }
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+        .logo-top {
+            font-size: 17px;
+            letter-spacing: 2.5px;
+            font-weight: bold;
+            color: black;
+        }
+        .logo-bottom {
+            font-size: 9px;
+            letter-spacing: 2.5px;
+            color: black;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+        }
+        .nav-links a {
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 5px 10px;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .register-container {
+            width: 90px;
+            height: 30px;
+            background-color: transparent;
+            border: 2px solid black;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        .register-btn {
+            background-color: #ffffff;
+            color: black;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .register-btn:hover {
+            opacity: 0.7;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 28px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: black;
+        }
+
+        .search-container {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+            width: 80%;
+            max-width: 600px;
+        }
+        .search-bar {
+            display: flex;
+            background: white;
+            border-radius: 30px;
+            padding: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .search-bar input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 15px 20px;
+            font-size: 16px;
+            border-radius: 30px 0 0 30px;
+        }
+        .search-bar button {
+            background: #FF4500;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        .search-bar button:hover {
+            background: #FF6347;
+        }
+
+        .middle-container {
+            background-color: #f8f8f8;
+            padding: 80px 20px;
+            text-align: center;
+            min-height: 700px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .middle-container h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .middle-container p {
+            font-size: 18px;
+            margin-bottom: 40px;
+            color: #666;
+        }
+
+         /* 3D Carousel Styles */
+        .carousel-3d-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 50px auto;
+            height: 400px;
+            perspective: 1200px;
+        }
+
+        .carousel-3d {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .carousel-3d-item {
+            position: absolute;
+            width: 280px;
+            height: 180px;
+            left: 50%;
+            top: 50%;
+            background: white;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.7s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transform-origin: center center -400px;
+            border: 1px solid #f0f0f0;
+            transform-style: preserve-3d;
+        }
+
+        .carousel-3d-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #FF4500, #FFA500);
+        }
+
+        .carousel-3d-item span {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+            padding: 0 15px;
+            transition: all 0.5s ease;
+        }
+
+        .carousel-3d-item .subtext {
+            font-size: 16px;
+            color: #777;
+            font-weight: normal;
+            text-align: center;
+            padding: 0 15px;
+            transition: all 0.5s ease;
+        }
+.carousel-3d-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    z-index: 10;
+    transform: translateY(-50%);
+    pointer-events: none; /* Allows clicks to pass through to elements below */
+}
+
+.carousel-3d-nav button {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    color: #FF4500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    pointer-events: auto; /* Re-enable clicks for buttons */
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel-3d-nav button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255,69,0,0.1), rgba(255,165,0,0.1));
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.carousel-3d-nav button:hover {
+    background: #FF4500;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(255, 69, 0, 0.3);
+}
+
+.carousel-3d-nav button:hover::before {
+    opacity: 1;
+}
+
+.carousel-3d-nav button:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 10px rgba(255, 69, 0, 0.4);
+}
+
+.carousel-3d-nav button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 69, 0, 0.4);
+}
+
+.carousel-3d-nav button:first-child {
+    margin-left: 30px;
+    padding-right: 5px; /* Adjust arrow position */
+}
+
+.carousel-3d-nav button:last-child {
+    margin-right: 30px;
+    padding-left: 5px; /* Adjust arrow position */
+}
+
+/* Add subtle pulse animation to attract attention */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.carousel-3d-nav button {
+    animation: pulse 2.5s infinite;
+}
+
+/* Disable pulse when hovering or interacting */
+.carousel-3d-nav button:hover,
+.carousel-3d-nav button:active {
+    animation: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .carousel-3d-nav button {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+    
+    .carousel-3d-nav button:first-child {
+        margin-left: 15px;
+    }
+    
+    .carousel-3d-nav button:last-child {
+        margin-right: 15px;
+    }
+}
+        /* Center item styling */
+        .carousel-3d-item.active {
+            transform: translate3d(-50%, -50%, 0) scale(1.15);
+            z-index: 10;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            opacity: 1 !important;
+        }
+
+        .carousel-3d-item.active span {
+            font-size: 26px;
+        }
+
+        .carousel-3d-item.active .subtext {
+            font-size: 18px;
+        }
+
+        .testimonials-section {
+            position: relative;
+            padding: 80px 20px;
+            text-align: center;
+            background: url('https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center;
+            background-size: cover;
+            color: white;
+        }
+
+        .testimonials-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .testimonials-header {
+            position: relative;
+            z-index: 2;
+        }
+
+        .testimonials-header h2 {
+            color: #ffffff;
+            font-size: 36px;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .testimonials-header p {
+            color: #ffffff;
+            font-size: 20px;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .testimonials-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 30px;
+            width: 350px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .client-name {
+            color: #FF4500;
+            margin: 0 0 10px 0;
+            font-size: 22px;
+        }
+
+        .rating {
+            color: #FFA500;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-text {
+            color: #555;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-wrap: wrap;
+                padding: 15px;
+            }
+
+            .hamburger {
+                display: block;
+                z-index: 4;
+            }
+
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background-color: white;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                padding: 20px 0;
+                z-index: 3;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .register-container {
+                margin-top: 10px;
+            }
+
+            .testimonial-card {
+                width: 90%;
+            }
+
+            .testimonials-header h2 {
+                font-size: 28px;
+            }
+
+            .testimonials-header p {
+                font-size: 16px;
+            }
+
+            .logo-top {
+                font-size: 18px;
+            }
+
+            .logo-bottom {
+                font-size: 10px;
+            }
+
+            .nav-links {
+                gap: 15px;
+                font-size: 14px;
+            }
+
+            .middle-container {
+                padding: 60px 10px;
+            }
+
+            .carousel-3d-item {
+                width: 240px;
+                height: 160px;
+            }
+
+            .carousel-3d-nav button {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="C:\Users\Naresh Tomar\Documents\project-root\Media\log.jpg" class="logo-image" alt="Feast and Fest logo">
+            <div class="logo-text">
+                <div class="logo-top">FEAST AND FEST</div>
+                <div class="logo-bottom">DINE AND CELEBRATE</div>
+            </div>
+        </div>
+
+        <button class="hamburger" aria-label="Toggle navigation">☰</button>
+
+        <div class="nav-menu">
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="work.html">Work With Us</a>
+                <a href="blogs.html">Blogs</a>
+                <a href="contact.html">Contact Us</a>
+            </nav>
+            <div class="register-container">
+                <a id="authButton" href="C:\Users\Naresh Tomar\Documents\project-root\frontend\register.html" class="register-btn">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="video-container">
+        <div class="full-screen-video">
+            <video autoplay loop muted playsinline class="fullscreen-video" poster="media/fallback.jpg">
+                <source src="C:\Users\Naresh Tomar\Documents\project-root\Media\background_video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div class="search-container">
+            <form class="search-bar" action="search.html" method="get" aria-label="Search services">
+                <input type="text" placeholder="Search for services, venues, or caterers..." name="query">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <section class="middle-container">
+        <h2>Our Special Services</h2>
+        <p>Discover the best catering, venues, event managers and entertainers all in one place!</p>
+        
+        <div class="carousel-3d-container">
+            <div class="carousel-3d" id="carousel3d">
+                <!-- Items will be added by JavaScript -->
+            </div>
+            
+            <div class="carousel-3d-nav">
+                <button id="carousel3dPrev">❮</button>
+                <button id="carousel3dNext">❯</button>
+            </div>
+        </div>
+        
+        <div class="carousel-3d-indicators" id="carousel3dIndicators">
+            <!-- Indicators will be added by JavaScript -->
+        </div>
+    </section>
+
+    <section class="testimonials-section">
+        <div class="testimonials-header">
+            <h2>Learn why 1000+ event planners trust FeastAndFest</h2>
+            <p>Check out some of our recent testimonials</p>
+        </div>
+
+        <div class="testimonials-container">
+            <div class="testimonial-card">
+                <h3 class="client-name">Grand Wedding Events</h3>
+                <div class="rating">★★★★★</div>
+                <p class="testimonial-text">
+                    "FeastAndFest transformed our wedding planning experience. Their team provided personalized attention that most companies don't offer..."
+                </p>
+            </div>
+
+            <div class="testimonial-card">
+                <h3 class="client-name">Corporate Events Inc.</h3>
+                <div class="rating">★★★★★</div>
+                <p class="testimonial-text">
+                    "The FeastAndFest team is an absolute pleasure to work with. They coordinated services for our 15-location conference series..."
+                </p>
+            </div>
+
+            <div class="testimonial-card">
+                <h3 class="client-name">Gourmet Festival Organizers</h3>
+                <div class="rating">★★★★★</div>
+                <p class="testimonial-text">
+                    "We tried multiple event service providers before finding FeastAndFest. Our food festival was a huge success thanks to them!"
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Check for registered user and update auth button
+        window.addEventListener('DOMContentLoaded', () => {
+            const authButton = document.getElementById("authButton");
+            const registeredUser = localStorage.getItem("registeredUser");
+
+            if (registeredUser && authButton) {
+                authButton.textContent = "Login";
+                authButton.href = "C:\\Users\\Naresh Tomar\\Documents\\project-root\\frontend\\login.html";
+            }
+
+            // Initialize 3D carousel
+            init3DCarousel();
+        });
+
+        // [Previous JavaScript remains the same until init3DCarousel()]
+
+        // 3D Carousel functionality
+        function init3DCarousel() {
+            const carousel = document.getElementById('carousel3d');
+            const prevBtn = document.getElementById('carousel3dPrev');
+            const nextBtn = document.getElementById('carousel3dNext');
+            const indicatorsContainer = document.getElementById('carousel3dIndicators');
+            
+            const items = [
+                { title: "CUSTOM", subtitle: "Tailored solutions" },
+                { title: "CUSTOM AI", subtitle: "Smart recommendations" },
+                { title: "SELF-SERVICE KIOSK", subtitle: "Easy ordering" },
+                { title: "POS", subtitle: "Point of sale" },
+                { title: "SHOP", subtitle: "Merchandise" }
+            ];
+            
+            let currentIndex = 0;
+            let isAnimating = false;
+            let carouselAngle = 0;
+            
+            // Create carousel items
+            function createCarouselItems() {
+                carousel.innerHTML = '';
+                indicatorsContainer.innerHTML = '';
+                
+                items.forEach((item, index) => {
+                    // Create carousel item
+                    const carouselItem = document.createElement('div');
+                    carouselItem.className = 'carousel-3d-item';
+                    carouselItem.dataset.index = index;
+                    
+                    carouselItem.innerHTML = `
+                        <span>${item.title}</span>
+                        <span class="subtext">${item.subtitle}</span>
+                    `;
+                    
+                    carouselItem.addEventListener('click', () => {
+                        if (!isAnimating) {
+                            const clickedIndex = parseInt(carouselItem.dataset.index);
+                            const diff = clickedIndex - currentIndex;
+                            if (diff !== 0) {
+                                const direction = diff > 0 ? 'next' : 'prev';
+                                const steps = Math.abs(diff) > items.length / 2 ? 
+                                    (direction === 'next' ? items.length - diff : items.length + diff) : 
+                                    Math.abs(diff);
+                                animateRotation(direction, steps);
+                            }
+                        }
+                    });
+                    
+                    carousel.appendChild(carouselItem);
+                    
+                    // Create indicator
+                    const indicator = document.createElement('div');
+                    indicator.className = 'carousel-3d-indicator';
+                    if (index === currentIndex) {
+                        indicator.classList.add('active');
+                    }
+                    indicator.addEventListener('click', () => {
+                        if (!isAnimating) {
+                            goToSlide(index);
+                        }
+                    });
+                    indicatorsContainer.appendChild(indicator);
+                });
+                
+                positionItems();
+            }
+            
+            // Position items in 3D space
+            function positionItems() {
+                const items = document.querySelectorAll('.carousel-3d-item');
+                const totalItems = items.length;
+                const angleStep = (Math.PI * 2) / totalItems;
+                
+                items.forEach((item, index) => {
+                    const angle = angleStep * index + carouselAngle;
+                    const x = Math.sin(angle) * 350;
+                    const z = (Math.cos(angle) * 350) - 350;
+                    const rotationY = (angle * (180 / Math.PI));
+                    
+                    // Calculate scale and opacity based on position
+                    const isCenter = Math.abs(angle % (Math.PI * 2)) < 0.01;
+                    const scale = isCenter ? 1.15 : 0.85;
+                    const opacity = isCenter ? 1 : 0.6;
+                    const zIndex = isCenter ? 10 : Math.round(100 - Math.abs(angle % (Math.PI * 2)) * 10);
+                    
+                    item.style.transform = `translate3d(calc(-50% + ${x}px), -50%, ${z}px) rotateY(${rotationY}deg) scale(${scale})`;
+                    item.style.opacity = opacity;
+                    item.style.zIndex = zIndex;
+                    
+                    if (isCenter) {
+                        item.classList.add('active');
+                        currentIndex = index;
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+                
+                updateIndicators();
+            }
+            
+            // Animate rotation
+            function animateRotation(direction, steps = 1) {
+                if (isAnimating) return;
+                isAnimating = true;
+                
+                const angleStep = (Math.PI * 2) / items.length;
+                const targetAngle = direction === 'next' 
+                    ? carouselAngle - (angleStep * steps)
+                    : carouselAngle + (angleStep * steps);
+                
+                const startAngle = carouselAngle;
+                const angleChange = targetAngle - startAngle;
+                let startTime = null;
+                const duration = 700 * steps;
+                
+                function animateStep(timestamp) {
+                    if (!startTime) startTime = timestamp;
+                    const progress = timestamp - startTime;
+                    const percentage = Math.min(progress / duration, 1);
+                    
+                    // Cubic ease-in-out for smooth animation
+                    const easePercentage = percentage < 0.5 
+                        ? 4 * percentage * percentage * percentage
+                        : 1 - Math.pow(-2 * percentage + 2, 3) / 2;
+                    
+                    carouselAngle = startAngle + (angleChange * easePercentage);
+                    positionItems();
+                    
+                    if (progress < duration) {
+                        requestAnimationFrame(animateStep);
+                    } else {
+                        // Animation complete
+                        isAnimating = false;
+                        carouselAngle = targetAngle;
+                        positionItems();
+                    }
+                }
+                
+                requestAnimationFrame(animateStep);
+            }
+            
+            // Update indicators
+            function updateIndicators() {
+                const indicators = document.querySelectorAll('.carousel-3d-indicator');
+                indicators.forEach((indicator, index) => {
+                    if (index === currentIndex) {
+                        indicator.classList.add('active');
+                    } else {
+                        indicator.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Go to specific slide
+            function goToSlide(index) {
+                const diff = index - currentIndex;
+                if (diff === 0) return;
+                
+                const direction = diff > 0 ? 'next' : 'prev';
+                const steps = Math.abs(diff) > items.length / 2 ? 
+                    (direction === 'next' ? items.length - diff : items.length + diff) : 
+                    Math.abs(diff);
+                
+                animateRotation(direction, steps);
+            }
+            
+            // Event listeners
+            prevBtn.addEventListener('click', () => {
+                if (!isAnimating) animateRotation('prev');
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                if (!isAnimating) animateRotation('next');
+            });
+            
+            // Initialize carousel
+            createCarouselItems();
+            
+            // Auto-rotate
+            let autoRotate = setInterval(() => {
+                if (!isAnimating) animateRotation('next');
+            }, 3000);
+            
+            // Pause on hover
+            carousel.addEventListener('mouseenter', () => {
+                clearInterval(autoRotate);
+            });
+            
+            carousel.addEventListener('mouseleave', () => {
+                autoRotate = setInterval(() => {
+                    if (!isAnimating) animateRotation('next');
+                }, 3000);
+            });
+            
+            // Touch support
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            carousel.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, {passive: true});
+            
+            carousel.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, {passive: true});
+            
+            function handleSwipe() {
+                if (touchEndX < touchStartX - 50) {
+                    if (!isAnimating) animateRotation('next');
+                } else if (touchEndX > touchStartX + 50) {
+                    if (!isAnimating) animateRotation('prev');
+                }
+            }
+        }
+    </script>
+    <!-- Add this right before the closing </body> tag, after the testimonials section -->
+
+<footer style="background-color: #2c2c2c; color: white; padding: 40px 20px; font-family: Arial, sans-serif;">
+    <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px;">
+        <!-- Column 1: Contact Info -->
+        <div>
+            <h3 style="color: #FF4500; font-size: 24px; margin-bottom: 20px;">FeastAndFest</h3>
+            <p style="margin: 8px 0;">E-mail: info@feastandfest.com</p>
+            <p style="margin: 8px 0;">Phone: +1(855)-555-EVNT</p>
+        </div>
+        
+        <!-- Column 2: Main Links -->
+        <div>
+            <h4 style="color: #FFA500; font-size: 18px; margin-bottom: 15px; text-transform: uppercase;">FeastAndFest</h4>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">PlanEm</a></li>
+                <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">CaterEm</a></li>
+                <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">VenueEm</a></li>
+                <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">Email club</a></li>
+                <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">Text club</a></li>
+                <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">Terms of use</a></li>
+                <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">Privacy policy</a></li>
+            </ul>
+        </div>
+        
+        <!-- Column 3: Vendors -->
+        <div>
+            <h4 style="color: #FFA500; font-size: 18px; margin-bottom: 15px; text-transform: uppercase;">Vendors</h4>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">Log in</a></li>
+                <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">Pricing</a></li>
+                <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">Service brochure</a></li>
+                <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">Vendor agreement</a></li>
+                <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">Marketing ideas</a></li>
+            </ul>
+        </div>
+        
+        <!-- Column 4: Integrations -->
+        <div>
+            <h4 style="color: #FFA500; font-size: 18px; margin-bottom: 15px; text-transform: uppercase;">Integration</h4>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">PayPal</a></li>
+                <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">Stripe</a></li>
+                <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">Square</a></li>
+            </ul>
+        </div>
+        
+        <!-- Column 5: Support -->
+        <div>
+            <h4 style="color: #FFA500; font-size: 18px; margin-bottom: 15px; text-transform: uppercase;">Support</h4>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">24/7 Support</a></li>
+                <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">Blog</a></li>
+                <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">Help</a></li>
+                <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">FAQs</a></li>
+                <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">Tutorials</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div style="max-width: 1200px; margin: 30px auto 0; padding-top: 20px; border-top: 1px solid #444; text-align: center;">
+        <p style="margin: 0; color: #aaa;">©2015-2024 FeastAndFest, Inc. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- Add this CSS to your style section -->
+<style>
+    footer a:hover {
+        color: #FF4500 !important;
+        text-decoration: underline !important;
+    }
+    
+    @media (max-width: 768px) {
+        footer {
+            padding: 30px 15px;
+        }
+        
+        footer div {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 20px !important;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        footer div {
+            grid-template-columns: 1fr !important;
+        }
+    }
+</style>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Setup Complete</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #ff512f, #f09819);
+    }
+
+    .completion-container {
+      background: #ffffff;
+      padding: 50px 40px;
+      border-radius: 20px 0 20px 0;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 400px;
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    .home-btn {
+      display: inline-block;
+      padding: 14px 30px;
+      background: linear-gradient(to right, #ff512f, #f09819);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 50px;
+      transition: 0.3s ease-in-out;
+    }
+
+    .home-btn:hover {
+      background: #ffffff;
+      color: #f09819;
+      border: 2px solid #f09819;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="completion-container">
+    <h1>Setup Complete!</h1>
+    <p>Your business account has been successfully created.</p>
+    <a href="home.html" class="home-btn">Go to Home</a>
+  </div>
+
+  <script>
+    // Redirect to home page after 3 seconds
+    setTimeout(() => {
+      window.location.href = 'home.html';
+    }, 3000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - FeastAndFest</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f8f8;
+    }
+    .dashboard-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .welcome-message {
+      font-size: 24px;
+      color: #333;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 15px;
+    }
+    .btn {
+      padding: 10px 20px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .logout-btn {
+      background: linear-gradient(to right, #ff512f, #f09819);
+      color: white;
+      border: none;
+    }
+    .home-btn {
+      background: white;
+      color: #f09819;
+      border: 2px solid #f09819;
+    }
+    .logout-btn:hover {
+      background: white;
+      color: #f09819;
+      border: 2px solid #f09819;
+    }
+    .home-btn:hover {
+      background: linear-gradient(to right, #ff512f, #f09819);
+      color: white;
+      border: 2px solid transparent;
+    }
+    .content {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <div class="header">
+      <div class="welcome-message" id="welcomeMessage"></div>
+      <div class="action-buttons">
+        <a href="home.html" class="btn home-btn">Home</a>
+        <button class="btn logout-btn" id="logoutBtn">Logout</button>
+      </div>
+    </div>
+    <div class="content">
+      <h2>Your Dashboard</h2>
+      <p>Welcome to your FeastAndFest business dashboard.</p>
+      <!-- You can add more dashboard content here -->
+    </div>
+  </div>
+
+  <script>
+    // Check if user is logged in
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (!currentUser || !currentUser.loggedIn) {
+      window.location.href = "login.html";
+    } else {
+      document.getElementById("welcomeMessage").textContent = 
+        `Welcome, ${currentUser.businessName || currentUser.email}!`;
+    }
+
+    // Logout functionality
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem("currentUser");
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>

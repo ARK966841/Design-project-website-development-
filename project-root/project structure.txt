@@ -1,0 +1,16 @@
+project-root
+|
+|
+|-----frontend/
+      |--home.html 
+      |--register_business.html
+      |--login.html
+      |--dashboard.html
+      |--register_user.html 
+      |--setup-complete.html 
+      |--register.html
+|-----media/
+      |--logo.png
+      |--background.mp4
+|-----BACKEND.sql
+|-----register.phpS

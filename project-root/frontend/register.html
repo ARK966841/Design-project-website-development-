@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registration Choice</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #ff512f, #f09819); /* Orange gradient */
+    }
+
+    .container {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 50px 40px;
+      width: 400px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 30px;
+      color: #333;
+      font-size: 24px;
+    }
+
+    .register-btn {
+      display: inline-block;
+      width: 80%;
+      margin: 15px 0;
+      padding: 12px;
+      background: linear-gradient(to right, #ff512f, #f09819);
+      color: #fff;
+      font-size: 16px;
+      border: none;
+      border-radius: 50px;
+      text-decoration: none;
+      text-align: center;
+      transition: 0.3s ease-in-out;
+      font-weight: bold;
+    }
+
+    .register-btn:hover {
+      background: #ffffff;
+      color: #f09819;
+      border: 2px solid #f09819;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Please Choose an Option</h2>
+    <a href="register_user.html" class="register-btn">Register as User</a>
+    <a href="register_business.html" class="register-btn">Register as Business</a>
+  </div>
+</body>
+</html>

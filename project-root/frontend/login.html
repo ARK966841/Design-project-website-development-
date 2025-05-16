@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Business Login</title>
+  <style>
+    /* Same styles as registration page */
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #ff512f, #f09819);
+    }
+
+    .form-container {
+      background: #ffffff;
+      padding: 50px 40px;
+      border-radius: 20px 0 20px 0;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 30px;
+      color: #333;
+      font-size: 24px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 50px;
+      font-size: 14px;
+      background-color: #f9f9f9;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #f09819;
+      background-color: #fff;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(to right, #ff512f, #f09819);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+    }
+
+    button:hover {
+      background: #ffffff;
+      color: #f09819;
+      border: 2px solid #f09819;
+      transform: scale(1.05);
+    }
+
+    .register-link {
+      margin-top: 20px;
+      color: #666;
+    }
+
+    .register-link a {
+      color: #f09819;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .error-message {
+      color: #ff3333;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Business Login</h2>
+    <form id="loginForm">
+      <div id="errorMessage" class="error-message"></div>
+      <input type="email" name="email" placeholder="Business Email" required />
+      <input type="password" name="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+    <div class="register-link">
+      Don't have an account? <a href="register.html">Register here</a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const email = this.email.value.trim();
+      const password = this.password.value;
+      const errorElement = document.getElementById("errorMessage");
+
+      // Basic validation
+      if (email === "" || password === "") {
+        errorElement.textContent = "Please fill in all fields.";
+        return;
+      }
+
+      // Check if user exists
+      const existingUsers = JSON.parse(localStorage.getItem("feastAndFestUsers")) || [];
+      const user = existingUsers.find(user => user.email === email);
+
+      if (!user) {
+        errorElement.textContent = "No account found with this email.";
+        return;
+      }
+
+      if (user.password !== password) {
+        errorElement.textContent = "Incorrect password. Please try again.";
+        return;
+      }
+
+      // Login successful
+      localStorage.setItem("currentUser", JSON.stringify({
+        id: user.id,
+        email: user.email,
+        businessName: user.businessName,
+        loggedIn: true
+      }));
+
+      // Redirect to dashboard
+      window.location.href = "dashboard.html";
+    });
+
+    // Check if already logged in
+    window.addEventListener('DOMContentLoaded', () => {
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      if (currentUser && currentUser.loggedIn) {
+        window.location.href = "dashboard.html";
+      }
+    });
+  </script>
+</body>
+</html>
